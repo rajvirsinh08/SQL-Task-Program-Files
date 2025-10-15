@@ -1,0 +1,71 @@
+write a plsql block which will give total no of students according gender
+				which display shopping bill
+				which can the movie realese today
+
+SQL> select * from students;
+
+      S_ID S_NAME                         GENDER
+---------- ------------------------------ ------------------------------
+         1 Ali                            male
+         2 Aayushi                        female
+         3 ajay                           male
+         4 jaimin                         male
+         5 yashvi                         female
+
+S
+  1  declare
+  2  male_count number:=0;
+  3  female_count number:=0;
+  4  begin
+  5  select count(*) into male_count from students where gender='male';
+  6  select count(*) into female_count from students where gender='female';
+  7  dbms_output.put_line('total no of male students:'||male_count);
+  8  dbms_output.put_line('total no of female students:'||female_count);
+  9* end;
+SQL> /
+total no of male students:3
+total no of female students:2
+
+PL/SQL procedure successfully completed.
+
+
+
+SQL> select * from shopping;
+
+       PID PNAME                               PRICE
+---------- ------------------------------ ----------
+         1 biscuit                              1000
+         2 goggles                               600
+         3 tshirts                              2500
+         4 jeans                                5000
+         5 snacks                               3000
+
+SQL> declare
+  2  jhjerhf
+  3  /
+jhjerhf
+      *
+ERROR at line 2:
+ORA-06550: line 2, column 7:
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the
+following:
+constant exception <an identifier>
+<a double-quoted delimited-identifier> table long double ref
+char time timestamp interval date binary national character
+nchar
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  bill number:=0;
+  3  begin
+  4  select sum(price) into bill from shopping;
+  5  dbms_output.put_line('Shopping bill is here:'||bill);
+  6* end;
+SQL> /
+Shopping bill is here:12100
+
+PL/SQL procedure successfully completed.
+

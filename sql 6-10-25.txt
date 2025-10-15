@@ -1,0 +1,261 @@
+SQL*Plus: Release 11.2.0.2.0 Production on Fri Sep 19 18:22:34 2025
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+ERROR:
+ORA-28002: the password will expire within 7 days
+
+
+Connected.
+SQL> ed
+SP2-0107: Nothing to save.
+SQL> ed
+SP2-0107: Nothing to save.
+SQL> declare
+  2  a varchar(10);
+  3  begin
+  4  a:="Hello world";
+  5  dbms_output.put_line(a);
+  6  end;
+  7  /
+a:="Hello world";
+    *
+ERROR at line 4:
+ORA-06550: line 4, column 5:
+PLS-00201: identifier 'Hello world' must be declared
+ORA-06550: line 4, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a varchar(10);
+  3  begin
+  4  a:="Hello world";
+  5  dbms_output.put_line(a);
+  6* end;
+SQL> set serveroutput on;
+SQL> Begin
+  2  dbms_output.put_line('Hello');
+  3  end;
+  4  /
+Hello
+
+PL/SQL procedure successfully completed.
+
+SQL>PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  a varchar(25);
+  3  begin
+  4  a:='Hello world';
+  5  dbms_output.put_line(a);
+  6  end;
+  7  /
+Hello world
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  x number(5);
+  3  y number(5);
+  4  z number(5);
+  5  begin
+  6  x:=10;
+  7  y:=20;
+  8  z:=x+y;
+  9  dbms_output.put_line('sum is'||z);
+ 10  end;
+ 11  /
+sum is30
+
+PL/SQL procedure successfully completed.
+
+SQL>
+  1  declare
+  2  x number;
+  3  y number;
+  4  z number;
+  5  add number;
+  6  begin
+  7  x:=&x;
+  8  y:=&y;
+  9  z:=&z;
+ 10  add:=x+y+z;
+ 11  dbms_output.put_line('sum is'||add);
+ 12* end;
+ 13  /
+Enter value for x: 22
+old   7: x:=&x;
+new   7: x:=22;
+Enter value for y: 33
+old   8: y:=&y;
+new   8: y:=33;
+Enter value for z: 44
+old   9: z:=&z;
+new   9: z:=44;
+sum is99
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+  1  declare
+  2  x number;
+  3  r number;
+  4  begin
+  5  x:=&x;
+  6  r:=MOD(x,2);
+  7  if(r=0) then
+  8  dbms_output.put_line('even');
+  9  else
+ 10  dbms_output.put_line('odd');
+ 11  end if;
+ 12* end;
+ 13  /
+Enter value for x: 3
+old   5: x:=&x;
+new   5: x:=3;
+odd
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for x: 2
+old   5: x:=&x;
+new   5: x:=2;
+even
+
+PL/SQL procedure successfully completed.
+  1  declare
+  2     a number;
+  3     b number;
+  4  begin
+  5     a:=&a;
+  6     b:=&b;
+  7     if(a>b)then
+  8             dbms_output.put_line('maximum is' ||a);
+  9     else
+ 10             dbms_output.put_line('maximum is' ||b);
+ 11     end if;
+ 12* end;
+ 13  /
+Enter value for a: 22
+old   5:        a:=&a;
+new   5:        a:=22;
+Enter value for b: 33
+old   6:        b:=&b;
+new   6:        b:=33;
+maximum is33
+
+
+  1  declare
+  2  n number;
+  3  d1 number;
+  4  d2 number;
+  5  d3 number;
+  6  tot number;
+  7  begin
+  8  n:=&n;
+  9  d3:=MOD(n,10);
+ 10  n:=TRUNC(n/10);
+ 11  d2:=MOD(n,10);
+ 12  n:=TRUNC(n/10);
+ 13  d1:=MOD(n,10);
+ 14  n:=TRUNC(n/10);
+ 15  tot:=d3+d2+d1;
+ 16  dbms_output.put_line('sum is' || tot);
+ 17* end;
+SQL> /
+Enter value for n: 123
+old   8: n:=&n;
+new   8: n:=123;
+sum is6
+
+PL/SQL procedure successfully completed.
+
+
+
+  1  declare
+  2  n1 number;
+  3  n2 number;
+  4  n3 number;
+  5  maxi number;
+  6  begin
+  7  n1:=&n1;
+  8  n2:=&n2;
+  9  n3:=&n3;
+ 10  if(n1>n2) then
+ 11     if(n1>n3)then
+ 12             maxi:=n1;
+ 13     else
+ 14             maxi:=n3;
+ 15     end if;
+ 16  else
+ 17     if(n3>n2)then
+ 18             maxi:=n3;
+ 19     else
+ 20             maxi:=n2;
+ 21     end if;
+ 22  end if;
+ 23  dbms_output.put_line('maximum is:'||maxi);
+ 24* end;
+SQL> /
+Enter value for n1: 11
+old   7: n1:=&n1;
+new   7: n1:=11;
+Enter value for n2: 22
+old   8: n2:=&n2;
+new   8: n2:=22;
+Enter value for n3: 33
+old   9: n3:=&n3;
+new   9: n3:=33;
+maximum is:33
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for n1: 33
+old   7: n1:=&n1;
+new   7: n1:=33;
+Enter value for n2: 44
+old   8: n2:=&n2;
+new   8: n2:=44;
+Enter value for n3: 11
+old   9: n3:=&n3;
+new   9: n3:=11;
+maximum is:44
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+  1  declare
+  2  n1 number;
+  3  n2 number;
+  4  temp number;
+  5  begin
+  6  n1:=&n1;
+  7  n2:=&n2;
+  8  dbms_output.put_line('before swapping Num1: '||n1||'and Num2: '||n2);
+  9  temp:=n1;
+ 10  n1:=n2;
+ 11  n2:=temp;
+ 12  dbms_output.put_line('before swapping Num1: '||n1||'and Num2:'||n2);
+ 13* end;
+ 14  /
+Enter value for n1: 22
+old   6: n1:=&n1;
+new   6: n1:=22;
+Enter value for n2: 55
+old   7: n2:=&n2;
+new   7: n2:=55;
+before swapping Num1: 22and Num2: 55
+before swapping Num1: 55and Num2:22
+
+PL/SQL procedure successfully completed.
+

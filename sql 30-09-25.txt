@@ -1,0 +1,202 @@
+
+SQL> create table emp(eid number(5) primary key,ename varchar(40),deptid number(6));
+
+Table created.
+
+SQL> create table dept(deptid number(6) primary key,deptname varchar(50));
+
+Table created.
+
+SQL> insert into emp values(&eid,'&ename',&deptid);
+Enter value for eid: 101
+Enter value for ename: jay
+Enter value for deptid: 1
+old   1: insert into emp values(&eid,'&ename',&deptid)
+new   1: insert into emp values(101,'jay',1)
+
+1 row created.
+
+SQL> /
+Enter value for eid: 102
+Enter value for ename: ajay
+Enter value for deptid: 2
+old   1: insert into emp values(&eid,'&ename',&deptid)
+new   1: insert into emp values(102,'ajay',2)
+
+1 row created.
+
+SQL> /
+Enter value for eid: 103
+Enter value for ename: jaimin
+Enter value for deptid: 3
+old   1: insert into emp values(&eid,'&ename',&deptid)
+new   1: insert into emp values(103,'jaimin',3)
+
+1 row created.
+
+SQL> /
+Enter value for eid: 104
+Enter value for ename: ali
+Enter value for deptid: 4
+old   1: insert into emp values(&eid,'&ename',&deptid)
+new   1: insert into emp values(104,'ali',4)
+
+1 row created.
+
+SQL> insert into dept values(&deptid,'&deptname');
+Enter value for deptid: 1
+Enter value for deptname: IT
+old   1: insert into dept values(&deptid,'&deptname')
+new   1: insert into dept values(1,'IT')
+
+1 row created.
+
+SQL> /
+Enter value for deptid: 2
+Enter value for deptname: Finance
+old   1: insert into dept values(&deptid,'&deptname')
+new   1: insert into dept values(2,'Finance')
+
+1 row created.
+
+SQL> /
+Enter value for deptid: 3
+Enter value for deptname: Management
+old   1: insert into dept values(&deptid,'&deptname')
+new   1: insert into dept values(3,'Management')
+
+1 row created.
+
+SQL> /
+Enter value for deptid: 4
+Enter value for deptname: AC
+old   1: insert into dept values(&deptid,'&deptname')
+new   1: insert into dept values(4,'AC')
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME                                        DEPTID
+---------- ---------------------------------------- ----------
+       101 jay                                               1
+       102 ajay                                              2
+       103 jaimin                                            3
+       104 ali                                               4
+
+SQL> select * from dept;
+
+    DEPTID DEPTNAME
+---------- --------------------------------------------------
+         1 IT
+         2 Finance
+         3 Management
+         4 AC
+
+SQL> alter table emp add constraint did_fk foreign key (deptid) references dept(deptid);
+
+Table altered.
+
+SQL> insert into emp values(&eid,'&ename',&deptid);
+Enter value for eid: 105
+Enter value for ename: vansh
+Enter value for deptid: 3
+old   1: insert into emp values(&eid,'&ename',&deptid)
+new   1: insert into emp values(105,'vansh',3)
+
+1 row created.
+
+SQL> select * from emp;
+
+       EID ENAME                                        DEPTID
+---------- ---------------------------------------- ----------
+       101 jay                                               1
+       102 ajay                                              2
+       103 jaimin                                            3
+       104 ali                                               4
+       105 vansh                                             3
+
+SQL> select * from dept
+  2  ;
+
+    DEPTID DEPTNAME
+---------- --------------------------------------------------
+         1 IT
+         2 Finance
+         3 Management
+         4 AC
+
+SQL> select * from emp inner join dept on emp.deptid=dept.deptid;
+
+       EID ENAME                                        DEPTID     DEPTID
+---------- ---------------------------------------- ---------- ----------
+DEPTNAME
+--------------------------------------------------
+       101 jay                                               1          1
+IT
+
+       102 ajay                                              2          2
+Finance
+
+       103 jaimin                                            3          3
+Management
+
+
+       EID ENAME                                        DEPTID     DEPTID
+---------- ---------------------------------------- ---------- ----------
+DEPTNAME
+--------------------------------------------------
+       104 ali                                               4          4
+AC
+
+       105 vansh                                             3          3
+Management
+
+
+SQL> set linesize 200;
+SQL> select * from emp inner join dept on emp.deptid=dept.deptid;
+
+       EID ENAME                                        DEPTID     DEPTID DEPTNAME
+---------- ---------------------------------------- ---------- ---------- --------------------------------------------------
+       101 jay                                               1          1 IT
+       102 ajay                                              2          2 Finance
+       103 jaimin                                            3          3 Management
+       104 ali                                               4          4 AC
+       105 vansh                                             3          3 Management
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

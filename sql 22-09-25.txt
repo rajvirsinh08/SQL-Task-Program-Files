@@ -1,0 +1,253 @@
+SQL> create table student(rollno varchar(5),name varchar(10),class varchar(5),dob date);
+
+Table created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             VARCHAR2(5)
+ NAME                                               VARCHAR2(10)
+ CLASS                                              VARCHAR2(5)
+ DOB                                                DATE
+
+SQL> create table course(courseno varchar(5),coursename varchar(20),maxmarks number(10),passmarks number(100));
+create table course(courseno varchar(5),coursename varchar(20),maxmarks number(10),passmarks number(100))
+                                                                                                    *
+ERROR at line 1:
+ORA-01727: numeric precision specifier is out of range (1 to 38)
+
+
+SQL> create table course(courseno varchar(5),coursename varchar(20),maxmarks number(10),passmarks number(10));
+
+Table created.
+
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSENO                                           VARCHAR2(5)
+ COURSENAME                                         VARCHAR2(20)
+ MAXMARKS                                           NUMBER(10)
+ PASSMARKS                                          NUMBER(10)
+
+SQL> create table sc(rollno varchar(5),courseno varchar(5),marks number(5));
+
+Table created.
+
+SQL> desc sc
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             VARCHAR2(5)
+ COURSENO                                           VARCHAR2(5)
+ MARKS                                              NUMBER(5)
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             VARCHAR2(5)
+ NAME                                               VARCHAR2(10)
+ CLASS                                              VARCHAR2(5)
+ DOB                                                DATE
+
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSENO                                           VARCHAR2(5)
+ COURSENAME                                         VARCHAR2(20)
+ MAXMARKS                                           NUMBER(10)
+ PASSMARKS                                          NUMBER(10)
+
+SQL>
+
+SQL> alter table student add primary key(rollno);
+
+Table altered.
+
+SQL> alter table course add primary key(courseno);
+
+Table altered.
+
+SQL> alter table student add unique(name);
+
+Table altered.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL VARCHAR2(5)
+ NAME                                               VARCHAR2(10)
+ CLASS                                              VARCHAR2(5)
+ DOB                                                DATE
+
+SQL> alter table student modify  name varchar(10) not null;
+
+Table altered.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL VARCHAR2(5)
+ NAME                                      NOT NULL VARCHAR2(10)
+ CLASS                                              VARCHAR2(5)
+ DOB                                                DATE
+
+SQL> alter table sc add constraint fk_sc_rollno foreign key (rollno)  references student (rollno);
+
+Table altered.
+
+SQL> alter table sc add constraint fk_sc_courseno foreign key(courseno) references course (courseno);
+
+Table altered.
+
+SQL>SQL> desc sc
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             VARCHAR2(5)
+ COURSENO                                           VARCHAR2(5)
+ MARKS                                              NUMBER(5)
+
+SQL> alter table sc add constraint ck_marks_range check(marks>=0 AND marks<=100);
+
+Table altered.
+
+SQL> desc sc
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             VARCHAR2(5)
+ COURSENO                                           VARCHAR2(5)
+ MARKS                                              NUMBER(5)
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL VARCHAR2(5)
+ NAME                                      NOT NULL VARCHAR2(10)
+ CLASS                                              VARCHAR2(5)
+ DOB                                                DATE
+
+SQL> insert into student values('&rollno','&name','&class','&dob');
+Enter value for rollno: 1
+Enter value for name: jaimin
+Enter value for class: A
+Enter value for dob: 07-march-1980
+old   1: insert into student values('&rollno','&name','&class','&dob')
+new   1: insert into student values('1','jaimin','A','07-march-1980')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 2
+Enter value for name: rajvir
+Enter value for class: A
+Enter value for dob: 21-aug-2004
+old   1: insert into student values('&rollno','&name','&class','&dob')
+new   1: insert into student values('2','rajvir','A','21-aug-2004')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 3
+Enter value for name: piyush
+Enter value for class: B
+Enter value for dob: 22-sep-1999
+old   1: insert into student values('&rollno','&name','&class','&dob')
+new   1: insert into student values('3','piyush','B','22-sep-1999')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 4
+Enter value for name: ali
+Enter value for class: B
+Enter value for dob: 23-jan-1982
+old   1: insert into student values('&rollno','&name','&class','&dob')
+new   1: insert into student values('4','ali','B','23-jan-1982')
+
+1 row created.
+
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSENO                                  NOT NULL VARCHAR2(5)
+ COURSENAME                                         VARCHAR2(20)
+ MAXMARKS                                           NUMBER(10)
+ PASSMARKS                                          NUMBER(10)
+
+SQL> insert into course values('&courseno','&coursename','&maxmarks','&passmarks');
+Enter value for courseno: c001
+Enter value for coursename: Database Management System
+Enter value for maxmarks: 100
+Enter value for passmarks: 33
+old   1: insert into course values('&courseno','&coursename','&maxmarks','&passmarks')
+new   1: insert into course values('c001','Database Management System','100','33')
+insert into course values('c001','Database Management System','100','33')
+                                 *
+ERROR at line 1:
+ORA-12899: value too large for column "SYSTEM"."COURSE"."COURSENAME" (actual:
+26, maximum: 20)
+
+
+SQL> insert into course values('&courseno','&coursename',&maxmarks,&passmarks);
+Enter value for courseno: c001
+Enter value for coursename: DBMS
+Enter value for maxmarks: 100
+Enter value for passmarks: 33
+old   1: insert into course values('&courseno','&coursename',&maxmarks,&passmarks)
+new   1: insert into course values('c001','DBMS',100,33)
+
+1 row created.
+
+SQL> /
+Enter value for courseno: c002
+Enter value for coursename: Python
+Enter value for maxmarks: 100
+Enter value for passmarks: 33
+old   1: insert into course values('&courseno','&coursename',&maxmarks,&passmarks)
+new   1: insert into course values('c002','Python',100,33)
+
+1 row created.
+
+SQL> /
+Enter value for courseno: c003
+Enter value for coursename: C
+Enter value for maxmarks: 100
+Enter value for passmarks: 33
+old   1: insert into course values('&courseno','&coursename',&maxmarks,&passmarks)
+new   1: insert into course values('c003','C',100,33)
+
+1 row created.
+
+SQL> /
+Enter value for courseno: c004
+Enter value for coursename: Java
+Enter value for maxmarks: 100
+Enter value for passmarks: 33
+old   1: insert into course values('&courseno','&coursename',&maxmarks,&passmarks)
+new   1: insert into course values('c004','Java',100,33)
+
+1 row created.
+
+SQL> select * from sc;
+
+no rows selected
+
+SQL>
+
+
+SQL> select rollno,marks from student,sc where student.rollno=sc.rollno;
+select rollno,marks from student,sc where student.rollno=sc.rollno
+       *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> select student.rollno,marks from student,sc where student.rollno=sc.rollno;
+
+ROLLN      MARKS
+----- ----------
+1             88
+2             77
+3             89
+4             99
+
+SQL>
+
+
